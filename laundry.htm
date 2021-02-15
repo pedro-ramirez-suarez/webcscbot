@@ -104,8 +104,8 @@
                         </li>
                     </ol>
                 </div>
-                <div id="refundFrame" class="col-md-4 offset-md-3 text-center m-3 justify-content-center p-auto col" >
-                    <div id="webchat" style='min-width: 590px; width: 100%; min-height: 500px; max-height: 500px;overflow-y: auto;'>
+                <div id="refundFrame" class="col-md-4 offset-md-3 text-center m-3 justify-content-center p-auto col" style='min-width: 500px;width: 100%; min-height: 550px; max-height: 550px;overflow-y: auto;' >
+                    <div id="webchat" style='width: 100%; height: 100%;overflow-y: auto;'>
 
                     </div>
 
@@ -147,12 +147,8 @@
         { 
             method: 'POST',
             headers: { 
-            'Authorization': 'Bearer rl7EM0IiRcY.1xNjzFt41mRg8Wbu23qNAyN8KJZlLyAKNc4uFwl9FcY',
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              User: { Id : 'newuserabc-123' }  
-            })
+            'Authorization': 'Bearer QCwrVWk3NnE.qmpilDQCVBOuVNIkTyQZ1Ps7rhYXD6dUVFmjm4lbu4U'            
+            }
         });
         let { token } = await response.json(); 
 
@@ -173,7 +169,6 @@
         window.WebChat.renderWebChat(
           {
             directLine: window.WebChat.createDirectLine({ token }),
-            userID: 'newuserabc-123',
             store
           },
           document.getElementById('webchat')
