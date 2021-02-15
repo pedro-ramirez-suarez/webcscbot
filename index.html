@@ -105,14 +105,12 @@
                     </ol>
                 </div>
                 <div id="refundFrame" class="col-md-4 offset-md-3 text-center m-3 justify-content-center p-auto col" >
-                    <div id="webchat" style='min-width: 590px; width: 100%; min-height: 500px;'>
+                    
 
-                    </div>
-
-                   <!-- <iframe 
+                    <iframe 
                     src='https://webchat.botframework.com/embed/DevMainBOT?s=0l5xaWwuD80.GWVCWPpHzEbZzKHBUqqy8KXj4VnA_amRpImCdCVh6wI'  
                     style='min-width: 590px; width: 100%; min-height: 500px;'></iframe>
-                    -->
+                    
 
                 </div>
             </div>
@@ -140,44 +138,7 @@
         });
     }, 100);
 
-    (async function () {
 
-
-        let response = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', 
-        { 
-            method: 'POST',
-            headers: { 
-            'Authorization': 'Bearer rl7EM0IiRcY.1xNjzFt41mRg8Wbu23qNAyN8KJZlLyAKNc4uFwl9FcY'
-            }
-        });
-        let { token } = await response.json(); 
-        console.log(token);
-        const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
-          if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
-            //Sending an event to the menu is displayed
-            dispatch({
-              type: 'WEB_CHAT/SEND_EVENT',
-              payload: {
-                name: 'webchat/join',
-                value: {message: 'Hi'}
-              }
-            });
-          }
-
-          return next(action);
-        });
-        console.log(store);
-        window.WebChat.renderWebChat(
-          {
-            directLine: window.WebChat.createDirectLine({ token }),
-            store
-          },
-          document.getElementById('webchat')
-        );
-
-        document.querySelector('#webchat > *').focus();
-
-    })().catch(err => console.error(err));
 
     
     
