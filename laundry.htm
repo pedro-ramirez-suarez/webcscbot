@@ -19,7 +19,8 @@
     <link rel="preload" href="./laundry_files/73cf64cdad1b93d0a269.css" as="style">
     <link rel="stylesheet" href="./laundry_files/73cf64cdad1b93d0a269.css">
     
-    
+    <script crossorigin="anonymous" src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+
 </head>
 
 <body class="csc" data-new-gr-c-s-check-loaded="14.980.0">
@@ -103,10 +104,15 @@
                         </li>
                     </ol>
                 </div>
-                <div id="refundFrame" class="col-md-4 offset-md-3 text-center m-3 justify-content-center p-auto col" >
-                    <iframe 
-                    src='https://webchat.botframework.com/embed/BOTPRODMainBot?s=NLoAXanh6UY.t3Ubse475v3efqQ_cWN3wHwdwSVX2cZPJuGyXH_BIE8'  
+                <div id="refundFrame" class="col-md-4 offset-md-3 text-center m-3 justify-content-center p-auto col" style='min-width: 500px;width: 100%; min-height: 550px; max-height: 550px;overflow-y: auto;' >
+                    <div id="webchat" style='width: 100%; height: 100%;overflow-y: auto;'>
+
+                    </div>
+
+                   <!-- <iframe 
+                    src='https://webchat.botframework.com/embed/DevMainBOT?s=0l5xaWwuD80.GWVCWPpHzEbZzKHBUqqy8KXj4VnA_amRpImCdCVh6wI'  
                     style='min-width: 590px; width: 100%; min-height: 500px;'></iframe>
+                    -->
 
                 </div>
             </div>
@@ -134,7 +140,62 @@
         });
     }, 100);
 
+    function fontFamily(fonts) {
+        return fonts.map(font => `'${font}'`).join(', ');
+    }
+
+    (async function () {
+
+
+        let response = await fetch('https://directline.botframework.com/v3/directline/tokens/generate', 
+        { 
+            method: 'POST',
+            headers: { 
+            'Authorization': 'Bearer QCwrVWk3NnE.qmpilDQCVBOuVNIkTyQZ1Ps7rhYXD6dUVFmjm4lbu4U'            
+            }
+        });
+        let { token } = await response.json(); 
+
+        const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
+          if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+            //Sending an event to the menu is displayed
+            dispatch({
+              type: 'WEB_CHAT/SEND_EVENT',
+              payload: {
+                name: 'webchat/join',
+                value: {message: 'Hi'}
+              }
+            });
+          }
+
+          return next(action);
+        });
+
+        const styleOptions = {
+          bubbleBackground: 'rgb(59,181,228, .2)',
+          bubbleFromUserBackground: 'rgb(245,245,247, .7)',
+          fontSizeSmall: '60%',
+          monospaceFont: fontFamily(['Courier New', 'monospace']),
+          primaryFont: fontFamily(['Calibri', 'Helvetica Neue', 'Arial', 'sans-serif']),
+        };
+
+        window.WebChat.renderWebChat(
+          {
+            directLine: window.WebChat.createDirectLine({ token }),
+            store,
+            styleOptions
+          },
+          document.getElementById('webchat')
+        );
+
+        document.querySelector('#webchat > *').focus();
+
+    })().catch(err => console.error(err));
+
     
+    
+
+
 </script>
 </body>
 
