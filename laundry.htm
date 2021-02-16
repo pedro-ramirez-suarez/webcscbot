@@ -140,6 +140,10 @@
         });
     }, 100);
 
+    function fontFamily(fonts) {
+        return fonts.map(font => `'${font}'`).join(', ');
+    }
+
     (async function () {
 
 
@@ -166,10 +170,20 @@
 
           return next(action);
         });
+
+        const styleOptions = {
+          bubbleBackground: 'rgb(59,181,228, .2)',
+          bubbleFromUserBackground: 'rgb(245,245,247, .7)',
+          fontSizeSmall: '60%',
+          monospaceFont: fontFamily(['Courier New', 'monospace']),
+          primaryFont: fontFamily(['Calibri', 'Helvetica Neue', 'Arial', 'sans-serif']),
+        };
+
         window.WebChat.renderWebChat(
           {
             directLine: window.WebChat.createDirectLine({ token }),
-            store
+            store,
+            styleOptions
           },
           document.getElementById('webchat')
         );
